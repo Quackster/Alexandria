@@ -21,7 +21,7 @@ public class TeleportUtils {
             // Block block = location.getBlock(); // Get the block at this location
 
             if (isSafeLocation(block)) {
-                return block.getLocation(); // Return the location if it's safe
+                return block.getRelative(BlockFace.UP).getLocation(); // Return the location if it's safe
             }
             attempts++;
         }

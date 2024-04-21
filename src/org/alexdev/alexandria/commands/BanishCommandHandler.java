@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.alexdev.alexandria.Alexandria;
 import org.alexdev.alexandria.util.MetadataKeys;
 import org.alexdev.alexandria.util.TeleportUtils;
 import org.alexdev.alexandria.util.TimeUtil;
@@ -14,35 +15,41 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
 
 public class BanishCommandHandler implements CommandExecutor {
-    private int TELEPORT_RADIUS = 9500;
+    private final int TELEPORT_RADIUS = 9500;
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String commandName, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String commandName, String[] args) {
         if (!(sender instanceof Player)) {
             return true;
         }
 
         Player player = (Player) sender;
 
+        if (player.isOp()) {
+            player.removeMetadata(MetadataKeys.BANISH_METADATA, Alexandria.getInstance());
+        }
+
         if (!player.getWorld().getName().equalsIgnoreCase("world")) {
             player.sendMessage(Component.text()
                     .append(Component.text("You are not in the overworld!", Style.style(NamedTextColor.RED)))
                     .build());
-
-
             return true;
         }
 
         if (player.hasMetadata(MetadataKeys.BANISH_METADATA)) {
             long secondsSince = player.getMetadata(MetadataKeys.BANISH_METADATA).get(0).asLong();
 
-            if (!(TimeUnit.HOURS.toSeconds(24) > TimeUtil.getUnixTime() - secondsSince)) {
-
-
+            if (secondsSince + TimeUnit.HOURS.toSeconds(24) > TimeUtil.getUnixTime()) {
+                player.sendMessage(Component.text()
+                        .append(Component.text("Please wait 24 hours before using /banish again", Style.style(NamedTextColor.RED)))
+                        .build());
+                return true;
             }
         }
 
@@ -67,6 +74,8 @@ public class BanishCommandHandler implements CommandExecutor {
             player.sendMessage(Component.text()
                     .append(Component.text("You will not be able to use this command again for 24 hours", Style.style(NamedTextColor.WHITE, TextDecoration.BOLD))
                             .toBuilder().build()));
+
+            player.setMetadata(MetadataKeys.BANISH_METADATA, new FixedMetadataValue(Alexandria.getInstance(), TimeUtil.getUnixTime()));
         });
 
         return true;
