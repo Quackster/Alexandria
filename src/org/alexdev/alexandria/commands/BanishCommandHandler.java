@@ -10,7 +10,6 @@ import org.alexdev.alexandria.util.TeleportUtils;
 import org.alexdev.alexandria.util.TimeUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -32,7 +31,7 @@ public class BanishCommandHandler implements CommandExecutor {
         Player player = (Player) sender;
 
         if (player.isOp()) {
-            player.removeMetadata(MetadataKeys.BANISH_METADATA, Alexandria.getInstance());
+            player.removeMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY, Alexandria.getInstance());
         }
 
         if (!player.getWorld().getName().equalsIgnoreCase("world")) {
@@ -42,8 +41,8 @@ public class BanishCommandHandler implements CommandExecutor {
             return true;
         }
 
-        if (player.hasMetadata(MetadataKeys.BANISH_METADATA)) {
-            long secondsSince = player.getMetadata(MetadataKeys.BANISH_METADATA).get(0).asLong();
+        if (player.hasMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY)) {
+            long secondsSince = player.getMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY).get(0).asLong();
 
             if (secondsSince + TimeUnit.HOURS.toSeconds(24) > TimeUtil.getUnixTime()) {
                 player.sendMessage(Component.text()
@@ -55,7 +54,7 @@ public class BanishCommandHandler implements CommandExecutor {
 
         player.sendMessage(Component.text()
                 .append(Component.text("Finding a safe location for you...", Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC))
-                        .toBuilder().build()));
+                .toBuilder().build()));
 
         Location safeLocation = TeleportUtils.getSafeLocationInRadius(TELEPORT_RADIUS, Bukkit.getServer().getWorld("world"));
 
@@ -75,7 +74,7 @@ public class BanishCommandHandler implements CommandExecutor {
                     .append(Component.text("You will not be able to use this command again for 24 hours", Style.style(NamedTextColor.WHITE, TextDecoration.BOLD))
                             .toBuilder().build()));
 
-            player.setMetadata(MetadataKeys.BANISH_METADATA, new FixedMetadataValue(Alexandria.getInstance(), TimeUtil.getUnixTime()));
+            player.setMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY, new FixedMetadataValue(Alexandria.getInstance(), TimeUtil.getUnixTime()));
         });
 
         return true;

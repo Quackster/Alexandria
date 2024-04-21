@@ -11,7 +11,30 @@ commands:
     usage: |
       /ctf [arguments]
     permission: alexandria.use
-    
+
+  tprequest:
+    description: Sends a teleport request to somebody
+    aliases:
+      - tpr
+    permission: alexandria.use
+    permission-message: You do not have permission!
+    usage: /<command> [target]
+
+  tpaccept:
+    description: Accepts a teleport request
+    aliases:
+      - tpa
+    permission: alexandria.use
+    permission-message: You do not have permission!
+    usage: /<command>
+
+  tpdecline:
+    description: Declines a teleport request
+    aliases:
+      - tpa
+    permission: alexandria.use
+    permission-message: You do not have permission!
+    usage: /<command>
 
 permissions:
   alexandria.use:

@@ -1,8 +1,12 @@
 package org.alexdev.alexandria;
 
 import org.alexdev.alexandria.commands.BanishCommandHandler;
+import org.alexdev.alexandria.commands.TeleportAcceptCommandHandler;
+import org.alexdev.alexandria.commands.TeleportDeclineCommandHandler;
+import org.alexdev.alexandria.commands.TeleportRequestCommandHandler;
 import org.alexdev.alexandria.listeners.PlayerListener;
 import org.alexdev.alexandria.configuration.ConfigurationManager;
+import org.alexdev.alexandria.managers.PlayerManager;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -25,9 +29,15 @@ public class Alexandria extends JavaPlugin {
         saveDefaultConfig();
         ConfigurationManager.getInstance().readConfig(getConfig());
 
+        // Reload players
+        PlayerManager.getInstance().reloadPlayers();
+        this.logger.info("There are " + PlayerManager.getInstance().getPlayers().size() + " players stored");
+
         // Command handling
-        CommandExecutor myCommands = new BanishCommandHandler();
-        getCommand("banish").setExecutor(myCommands);
+        getCommand("banish").setExecutor(new BanishCommandHandler());
+        getCommand("tprequest").setExecutor(new TeleportRequestCommandHandler());
+        getCommand("tpdecline").setExecutor(new TeleportDeclineCommandHandler());
+        getCommand("tpaccept").setExecutor(new TeleportAcceptCommandHandler());
 
         this.registerListeners();
         logger.info("Finished");
@@ -42,7 +52,7 @@ public class Alexandria extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        PlayerManager.getInstance().getPlayers().clear();
     }
 
     /**

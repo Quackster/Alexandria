@@ -1,5 +1,7 @@
 package org.alexdev.alexandria.listeners;
 
+import org.alexdev.alexandria.managers.PluginPlayer;
+import org.alexdev.alexandria.managers.PlayerManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
@@ -10,12 +12,17 @@ import org.bukkit.event.player.*;
 public class PlayerListener implements Listener {
     @EventHandler
     public void onPlayerJoin(final PlayerJoinEvent event) {
-
+        if (!PlayerManager.getInstance().hasPlayer(event.getPlayer())) {
+            PlayerManager.getInstance().addPlayer(event.getPlayer());
+        }
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-
+        if (PlayerManager.getInstance().hasPlayer(event.getPlayer())) {
+            PluginPlayer battlePlayer = PlayerManager.getInstance().getPlayer(event.getPlayer());
+            PlayerManager.getInstance().removePlayer(event.getPlayer());
+        }
     }
 
     @EventHandler
