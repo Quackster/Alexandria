@@ -1,0 +1,19 @@
+name: Alexandria
+authors: [Cleopatra_Vll]
+version: 0.1
+main: org.alexdev.alexandria.Alexandria
+api-version: 1.20
+
+commands:
+  banish:
+    description: Teleports you safetly somewhere randomly in te world.
+    aliases: [ctf]
+    usage: |
+      /ctf [arguments]
+    permission: alexandria.use
+    
+
+permissions:
+  alexandria.use:
+    description: use alexandria
+    default: true
