@@ -63,12 +63,12 @@ public class TeleportDeclineCommandHandler implements CommandExecutor {
         Player target = offlineTarget.getPlayer();
 
         player.sendMessage(Component.text()
-                .append(Component.text("You have rejected " + target.getName() + "'s teleport request", Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC))
-                        .toBuilder().build()));
+                .append(Component.text("You have rejected " + target.getName() + "'s teleport request", Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC)))
+                        .build());
 
         target.sendMessage(Component.text()
-                .append(Component.text(player.getName() + " has rejected your teleport request", Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC))
-                        .toBuilder().build()));
+                .append(Component.text(player.getName() + " has rejected your teleport request", Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC)))
+                        .build());
 
         return true;
     }

@@ -64,21 +64,21 @@ public class TeleportAcceptCommandHandler implements CommandExecutor {
         Player target = offlineTarget.getPlayer();
 
         target.sendMessage(Component.text()
-                .append(Component.text("Teleporting you to do " + player.getName(), Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC))
-                        .toBuilder().build()));
+                .append(Component.text("Teleporting you to do " + player.getName(), Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC)))
+                        .build());
 
         target.teleportAsync(player.getLocation()).thenRun(() -> {
             player.sendMessage(Component.text()
-                    .append(Component.text(target.getName() + " has teleported to you", Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC))
-                            .toBuilder().build()));
+                    .append(Component.text(target.getName() + " has teleported to you", Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC)))
+                    .build());
 
             target.sendMessage(Component.text()
                     .append(Component.text("You have been teleported to " + player.getName() + "!", Style.style(NamedTextColor.YELLOW)))
                     .build());
 
             target.sendMessage(Component.text()
-                    .append(Component.text("You will not be able to use this command again for 24 hours", Style.style(NamedTextColor.WHITE, TextDecoration.BOLD))
-                            .toBuilder().build()));
+                    .append(Component.text("You will not be able to use this command again for 24 hours", Style.style(NamedTextColor.WHITE, TextDecoration.BOLD)))
+                    .build());
 
             target.setMetadata(MetadataKeys.TELEPORT_REQUEST_TIME_SINCE, new FixedMetadataValue(Alexandria.getInstance(), TimeUtil.getUnixTime()));
         });

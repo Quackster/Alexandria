@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.TimeUnit;
 
 public class BanishCommandHandler implements CommandExecutor {
-    private final int TELEPORT_RADIUS = 9500;
+    private final int TELEPORT_RADIUS = 9000;
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String commandName, String[] args) {
@@ -53,8 +53,8 @@ public class BanishCommandHandler implements CommandExecutor {
         }
 
         player.sendMessage(Component.text()
-                .append(Component.text("Finding a safe location for you...", Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC))
-                .toBuilder().build()));
+                .append(Component.text("Finding a safe location for you...", Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC)))
+                .build());
 
         Location safeLocation = TeleportUtils.getSafeLocationInRadius(TELEPORT_RADIUS, Bukkit.getServer().getWorld("world"));
 
@@ -71,8 +71,8 @@ public class BanishCommandHandler implements CommandExecutor {
                     .build());
 
             player.sendMessage(Component.text()
-                    .append(Component.text("You will not be able to use this command again for 24 hours", Style.style(NamedTextColor.WHITE, TextDecoration.BOLD))
-                            .toBuilder().build()));
+                    .append(Component.text("You will not be able to use this command again for 24 hours", Style.style(NamedTextColor.WHITE, TextDecoration.BOLD)))
+                            .build());
 
             player.setMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY, new FixedMetadataValue(Alexandria.getInstance(), TimeUtil.getUnixTime()));
         });

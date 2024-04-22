@@ -104,11 +104,11 @@ public class TeleportRequestCommandHandler implements CommandExecutor {
                 .build());
 
         target.sendMessage(Component.text()
-                .append(Component.text(player.getName() + " has requested to teleport to you, either enter ", Style.style(NamedTextColor.RED))
+                .append(Component.text(player.getName() + " has requested to teleport to you, either enter ", Style.style(NamedTextColor.RED)))
                 .append(Component.text("/tpdecline ", Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC)))
                 .append(Component.text("or ", Style.style(NamedTextColor.RED)))
                 .append(Component.text("/tpaccept", Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC)))
-                .toBuilder().build()));
+                .build());
 
         return true;
     }
