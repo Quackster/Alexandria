@@ -13,8 +13,8 @@ public class TeleportUtils {
     public static Location getSafeLocationInRadius(int radius, World world) {
         int attempts = 0;
         while (attempts < 100) { // Try up to 100 times to find a safe location
-            double x = (Math.random() * (2 * radius)) - radius; // Random x coordinate
-            double z = (Math.random() * (2 * radius)) - radius; // Random z coordinate
+            double x = ((Math.random() * (2 * radius)) - radius) + 500; // Random x coordinate
+            double z = ((Math.random() * (2 * radius)) - radius) + 500; // Random z coordinate
 
             // Location location = new Location(world, x, 0, z);
             Block block = world.getHighestBlockAt((int) x, (int) z);
