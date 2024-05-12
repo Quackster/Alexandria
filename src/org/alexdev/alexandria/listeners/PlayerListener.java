@@ -4,8 +4,11 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.alexdev.alexandria.Alexandria;
 import org.alexdev.alexandria.managers.PluginPlayer;
 import org.alexdev.alexandria.managers.PlayerManager;
+import org.alexdev.alexandria.util.MetadataKeys;
+import org.alexdev.alexandria.util.TimeUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,6 +18,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 
 public class PlayerListener implements Listener {
     @EventHandler
@@ -114,7 +118,14 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
+        Player player = event.getPlayer();
+        player.removeMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY, Alexandria.getInstance());
 
+        player.sendMessage(Component.text()
+                .append(Component.text("The ", Style.style(NamedTextColor.GRAY)))
+                .append(Component.text("/banish ", Style.style(NamedTextColor.DARK_RED)))
+                .append(Component.text("24 hour timeout has been reset", Style.style(NamedTextColor.GRAY)))
+                .build());
     }
 
 
