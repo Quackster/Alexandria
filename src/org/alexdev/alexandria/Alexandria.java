@@ -4,6 +4,8 @@ import org.alexdev.alexandria.commands.BanishCommandHandler;
 import org.alexdev.alexandria.commands.TeleportAcceptCommandHandler;
 import org.alexdev.alexandria.commands.TeleportDeclineCommandHandler;
 import org.alexdev.alexandria.commands.TeleportRequestCommandHandler;
+import org.alexdev.alexandria.listeners.BlockListener;
+import org.alexdev.alexandria.listeners.EntityListener;
 import org.alexdev.alexandria.listeners.PlayerListener;
 import org.alexdev.alexandria.configuration.ConfigurationManager;
 import org.alexdev.alexandria.managers.PlayerManager;
@@ -48,6 +50,8 @@ public class Alexandria extends JavaPlugin {
      */
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+        getServer().getPluginManager().registerEvents(new BlockListener(), this);
+        getServer().getPluginManager().registerEvents(new EntityListener(), this);
     }
 
     @Override

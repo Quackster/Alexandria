@@ -20,6 +20,8 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import java.util.concurrent.TimeUnit;
+
 public class PlayerListener implements Listener {
     @EventHandler
     public void onPlayerJoin(final PlayerJoinEvent event) {
@@ -119,13 +121,20 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getPlayer();
-        player.removeMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY, Alexandria.getInstance());
 
-        player.sendMessage(Component.text()
-                .append(Component.text("The ", Style.style(NamedTextColor.GRAY)))
-                .append(Component.text("/banish ", Style.style(NamedTextColor.DARK_RED)))
-                .append(Component.text("24 hour timeout has been reset", Style.style(NamedTextColor.GRAY)))
-                .build());
+        if (player.hasMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY)) {
+            long secondsSince = player.getMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY).get(0).asLong();
+
+            if (secondsSince + TimeUnit.HOURS.toSeconds(24) > TimeUtil.getUnixTime()) {
+                player.removeMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY, Alexandria.getInstance());
+
+                player.sendMessage(Component.text()
+                        .append(Component.text("The ", Style.style(NamedTextColor.GRAY)))
+                        .append(Component.text("/banish ", Style.style(NamedTextColor.DARK_RED)))
+                        .append(Component.text("24 hour timeout has been reset", Style.style(NamedTextColor.GRAY)))
+                        .build());
+            }
+        }
     }
 
 
