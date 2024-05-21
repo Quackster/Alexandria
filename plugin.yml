@@ -6,10 +6,15 @@ api-version: 1.20
 
 commands:
   banish:
-    description: Teleports you safetly somewhere randomly in te world.
-    aliases: [ctf]
+    description: Teleports you safely somewhere randomly in the world.
     usage: |
-      /ctf [arguments]
+      /banish
+    permission: alexandria.use
+
+  afk:
+    description: Sets you to AFK status and will untoggle AFK immediately if you start moving.
+    usage: |
+      /afk
     permission: alexandria.use
 
   tprequest:

@@ -1,9 +1,6 @@
 package org.alexdev.alexandria;
 
-import org.alexdev.alexandria.commands.BanishCommandHandler;
-import org.alexdev.alexandria.commands.TeleportAcceptCommandHandler;
-import org.alexdev.alexandria.commands.TeleportDeclineCommandHandler;
-import org.alexdev.alexandria.commands.TeleportRequestCommandHandler;
+import org.alexdev.alexandria.commands.*;
 import org.alexdev.alexandria.listeners.BlockListener;
 import org.alexdev.alexandria.listeners.EntityListener;
 import org.alexdev.alexandria.listeners.PlayerListener;
@@ -40,6 +37,7 @@ public class Alexandria extends JavaPlugin {
         getCommand("tprequest").setExecutor(new TeleportRequestCommandHandler());
         getCommand("tpdecline").setExecutor(new TeleportDeclineCommandHandler());
         getCommand("tpaccept").setExecutor(new TeleportAcceptCommandHandler());
+        getCommand("afk").setExecutor(new AfkCommandHandler());
 
         this.registerListeners();
         logger.info("Finished");
