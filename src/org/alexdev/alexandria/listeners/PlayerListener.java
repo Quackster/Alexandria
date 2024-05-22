@@ -1,5 +1,6 @@
 package org.alexdev.alexandria.listeners;
 
+import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
@@ -120,8 +121,13 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
+        PluginPlayer pluginPlayer = PlayerManager.getInstance().getPlayer(event.getPlayer());
 
+        if (pluginPlayer == null)
+            return;
+
+        pluginPlayer.updateLastMovement();
     }
 
     @EventHandler
@@ -174,27 +180,33 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onAsyncPlayerChatEvent(AsyncPlayerChatEvent event) {
+    public void onAsyncPlayerChatEvent(AsyncChatEvent event) {
         PluginPlayer pluginPlayer = PlayerManager.getInstance().getPlayer(event.getPlayer());
 
         if (pluginPlayer == null)
             return;
 
-        // event.getPlayer().sendMessage("sqrt: " + event.getFrom().distanceSquared(event.getTo()));
-        // event.getPlayer().sendMessage("dist: " + event.getFrom().distanceSquared(event.getTo()));
-        // event.getPlayer().sendMessage("**");
-
         pluginPlayer.updateLastMovement();
     }
 
     @EventHandler
-    public void onPlayerSprint(PlayerToggleSprintEvent e) {
+    public void onPlayerSprint(PlayerToggleSprintEvent event) {
+        PluginPlayer pluginPlayer = PlayerManager.getInstance().getPlayer(event.getPlayer());
 
+        if (pluginPlayer == null)
+            return;
+
+        pluginPlayer.updateLastMovement();
     }
 
 
     @EventHandler
-    public void onPlayerSneak(PlayerToggleSneakEvent e) {
+    public void onPlayerSneak(PlayerToggleSneakEvent event) {
+        PluginPlayer pluginPlayer = PlayerManager.getInstance().getPlayer(event.getPlayer());
 
+        if (pluginPlayer == null)
+            return;
+
+        pluginPlayer.updateLastMovement();
     }
 }
