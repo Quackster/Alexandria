@@ -6,14 +6,19 @@ import org.alexdev.alexandria.listeners.EntityListener;
 import org.alexdev.alexandria.listeners.PlayerListener;
 import org.alexdev.alexandria.configuration.ConfigurationManager;
 import org.alexdev.alexandria.managers.PlayerManager;
+import org.alexdev.alexandria.tasks.PlayerActivityTask;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
 
 public class Alexandria extends JavaPlugin {
+    public static final boolean ENABLE_AFK_CHECK = true;
+
     private static Alexandria instance;
     private Logger logger;
+    private PlayerActivityTask playerActivityTask;
 
     @Override
     public void onEnable() {
@@ -40,6 +45,12 @@ public class Alexandria extends JavaPlugin {
         getCommand("afk").setExecutor(new AfkCommandHandler());
 
         this.registerListeners();
+
+        if (ENABLE_AFK_CHECK) {
+            this.playerActivityTask = new PlayerActivityTask();
+            this.playerActivityTask.runTaskTimer(this, 20L, 20L);
+        }
+
         logger.info("Finished");
     }
 

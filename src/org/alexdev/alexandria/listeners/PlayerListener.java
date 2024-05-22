@@ -9,6 +9,7 @@ import org.alexdev.alexandria.managers.PluginPlayer;
 import org.alexdev.alexandria.managers.PlayerManager;
 import org.alexdev.alexandria.util.MetadataKeys;
 import org.alexdev.alexandria.util.TimeUtil;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -95,12 +96,22 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent e) {
+        PluginPlayer pluginPlayer = PlayerManager.getInstance().getPlayer(e.getPlayer());
 
+        if (pluginPlayer == null)
+            return;
+
+        pluginPlayer.updateLastMovement();
     }
 
     @EventHandler
     public void onPlayerTeleportEvent(PlayerTeleportEvent e) {
+        PluginPlayer pluginPlayer = PlayerManager.getInstance().getPlayer(e.getPlayer());
 
+        if (pluginPlayer == null)
+            return;
+
+        pluginPlayer.updateLastMovement();
     }
 
     @EventHandler
@@ -146,8 +157,34 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
+        PluginPlayer pluginPlayer = PlayerManager.getInstance().getPlayer(event.getPlayer());
 
+        if (pluginPlayer == null)
+            return;
 
+        // event.getPlayer().sendMessage("sqrt: " + event.getFrom().distanceSquared(event.getTo()));
+        // event.getPlayer().sendMessage("dist: " + event.getFrom().distanceSquared(event.getTo()));
+        // event.getPlayer().sendMessage("**");
+
+        final Location afk = pluginPlayer.getAfkLocation();
+
+        if (afk == null || !event.getTo().getWorld().equals(afk.getWorld()) || afk.distanceSquared(event.getTo()) > 9) {
+            pluginPlayer.updateLastMovement();
+        }
+    }
+
+    @EventHandler
+    public void onAsyncPlayerChatEvent(AsyncPlayerChatEvent event) {
+        PluginPlayer pluginPlayer = PlayerManager.getInstance().getPlayer(event.getPlayer());
+
+        if (pluginPlayer == null)
+            return;
+
+        // event.getPlayer().sendMessage("sqrt: " + event.getFrom().distanceSquared(event.getTo()));
+        // event.getPlayer().sendMessage("dist: " + event.getFrom().distanceSquared(event.getTo()));
+        // event.getPlayer().sendMessage("**");
+
+        pluginPlayer.updateLastMovement();
     }
 
     @EventHandler
