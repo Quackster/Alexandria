@@ -9,6 +9,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
+import java.util.concurrent.CompletableFuture;
+
 public class TeleportUtils {
     public static Location getSafeLocationInRadius(int radius, World world) {
         int attempts = 0;
@@ -16,13 +18,24 @@ public class TeleportUtils {
             double x = ((Math.random() * (2 * radius)) - radius) + 500; // Random x coordinate
             double z = ((Math.random() * (2 * radius)) - radius) + 500; // Random z coordinate
 
-            // Location location = new Location(world, x, 0, z);
-            Block block = world.getHighestBlockAt((int) x, (int) z);
-            // Block block = location.getBlock(); // Get the block at this location
+            Location location = new Location(world, x, 0, z);
 
-            if (isSafeLocation(block)) {
-                return block.getRelative(BlockFace.UP).getLocation(); // Return the location if it's safe
+            final Location safeBlock = CompletableFuture
+                    .supplyAsync(() -> {
+                        Block block = world.getHighestBlockAt(location);
+
+                        if (isSafeLocation(block)) {
+                            return block.getRelative(BlockFace.UP).getLocation();
+                        }
+                        return null;
+                    },
+                    command -> Bukkit.getRegionScheduler().execute(Alexandria.getInstance(), location, command))
+                    .join();
+
+            if (safeBlock != null) {
+                return safeBlock;
             }
+
             attempts++;
         }
         // Alexandria.getInstance().getLogger().warning("Failed to find a safe location within " + radius + " blocks.");

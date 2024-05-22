@@ -48,7 +48,7 @@ public class Alexandria extends JavaPlugin {
 
         if (ENABLE_AFK_CHECK) {
             this.playerActivityTask = new PlayerActivityTask();
-            this.playerActivityTask.runTaskTimer(this, 20L, 20L);
+            this.getServer().getGlobalRegionScheduler().runAtFixedRate(this, stask -> this.playerActivityTask.run(), 20L, 20L);
         }
 
         logger.info("Finished");
