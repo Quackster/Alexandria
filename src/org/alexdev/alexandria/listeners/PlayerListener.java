@@ -4,12 +4,14 @@ import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.alexdev.alexandria.Alexandria;
 import org.alexdev.alexandria.managers.PluginPlayer;
 import org.alexdev.alexandria.managers.PlayerManager;
 import org.alexdev.alexandria.util.MetadataKeys;
 import org.alexdev.alexandria.util.TimeUtil;
+import org.alexdev.alexandria.util.enums.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -79,6 +81,12 @@ public class PlayerListener implements Listener {
             player.getInventory().addItem(new ItemStack(Material.STONE_SHOVEL, 1));
             player.getInventory().addItem(new ItemStack(Material.APPLE, 16));
             player.getInventory().addItem(new ItemStack(Material.OAK_PLANKS, 16));
+        }
+
+        if (player.hasMetadata(MetadataKeys.CHAT_COLOR)) {
+            String chatColorName = player.getMetadata(MetadataKeys.CHAT_COLOR).get(0).asString();
+            Color chatColor = Color.valueOf(chatColorName.toUpperCase());
+            player.displayName(Component.text(player.getName(), Style.style(TextColor.color(chatColor.getRed(), chatColor.getGreen(), chatColor.getBlue()))));
         }
     }
 

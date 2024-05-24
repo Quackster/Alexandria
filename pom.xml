@@ -47,13 +47,13 @@
 		</resources>
 
 		<defaultGoal>clean package install</defaultGoal>
-		<finalName>BattleCTF</finalName>
+		<finalName>Alexandria</finalName>
 		<sourceDirectory>src</sourceDirectory>
 	</build>
 
 	<!-- Java Version -->
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>21</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
