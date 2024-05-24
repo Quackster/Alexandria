@@ -74,6 +74,15 @@ public class EntityListener implements Listener {
     }
 
     @EventHandler
+    public void onEnderDragonDeathEvent(EntityDeathEvent event) {
+        if (event.getEntityType() == EntityType.ENDER_DRAGON) {
+            if (event.getEntity().getKiller() != null) {
+                event.getDrops().add(new ItemStack(Material.ELYTRA, 1));
+            }
+        }
+    }
+
+    @EventHandler
     public void onEntityExplodeEvent(EntityExplodeEvent event) {
         List<Block> blocks = event.blockList();
 
