@@ -78,6 +78,10 @@ public class EntityListener implements Listener {
         if (event.getEntityType() == EntityType.ENDER_DRAGON) {
             if (event.getEntity().getKiller() != null) {
                 event.getDrops().add(new ItemStack(Material.ELYTRA, 1));
+
+                if (Math.random() <= 0.10) {
+                    event.getDrops().add(new ItemStack(Material.SHULKER_SHELL, 1));
+                }
             }
         }
     }
