@@ -44,6 +44,10 @@ public class Alexandria extends JavaPlugin {
         getCommand("tpaccept").setExecutor(new TeleportAcceptCommandHandler());
         getCommand("afk").setExecutor(new AfkCommandHandler());
 
+        // Command + tab handling
+        getCommand("setchatcolour").setExecutor(new SetChatColorCommandHandler());
+        getCommand("setchatcolour").setTabCompleter(new SetChatColorCommandHandler());
+
         this.registerListeners();
 
         if (ENABLE_AFK_CHECK) {

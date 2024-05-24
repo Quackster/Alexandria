@@ -74,6 +74,52 @@ public class EntityListener implements Listener {
     }
 
     @EventHandler
+    public void onEnderDragonDeathEvent(EntityDeathEvent event) {
+        if (event.getEntityType() == EntityType.ENDER_DRAGON) {
+            if (event.getEntity().getKiller() != null) {
+                event.getDrops().add(new ItemStack(Material.ELYTRA, 1));
+
+                if (Math.random() <= 0.10) {
+                    event.getDrops().add(new ItemStack(Material.SHULKER_SHELL, 1));
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onDrownedDropTurtleEggsDeathEvent(EntityDeathEvent event) {
+        if (Math.random() > 0.05) { // 5% chance of turtle eggs
+            return;
+        }
+
+        if (event.getEntityType() == EntityType.DROWNED) {
+            if (event.getEntity().getKiller() != null) {
+                ItemStack handItem = event.getEntity().getKiller().getInventory().getItemInMainHand();
+                int maxEggChance = 1;
+
+                if (handItem.containsEnchantment(Enchantment.LOOT_BONUS_MOBS)) {
+                    int lootingLevel = handItem.getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
+
+                    switch (lootingLevel) {
+                        case 1:
+                            maxEggChance = 2;
+                            break;
+                        case 2:
+                            maxEggChance = 3;
+                            break;
+                        case 3:
+                            maxEggChance = 4;
+                            break;
+                    }
+                }
+
+                int eggDropCount = random.nextInt(maxEggChance) + 1; // Randomly decide the drop count
+                event.getDrops().add(new ItemStack(Material.TURTLE_EGG, eggDropCount));
+            }
+        }
+    }
+
+    @EventHandler
     public void onEntityExplodeEvent(EntityExplodeEvent event) {
         List<Block> blocks = event.blockList();
 
