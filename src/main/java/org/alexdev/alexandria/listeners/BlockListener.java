@@ -1,5 +1,6 @@
 package org.alexdev.alexandria.listeners;
 
+import org.alexdev.alexandria.Alexandria;
 import org.alexdev.alexandria.util.BlockUtil;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -15,6 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlockListener implements Listener {
+    private final Alexandria plugin;
+
+    public BlockListener(Alexandria plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler
     public void onBlockBreakEvent(BlockBreakEvent event) {

@@ -1,5 +1,6 @@
 package org.alexdev.alexandria;
 
+import com.loohp.lotterysix.objects.Scheduler;
 import org.alexdev.alexandria.commands.*;
 import org.alexdev.alexandria.listeners.BlockListener;
 import org.alexdev.alexandria.listeners.EntityListener;
@@ -17,6 +18,9 @@ public class Alexandria extends JavaPlugin {
     public static final boolean ENABLE_AFK_CHECK = true;
 
     private static Alexandria instance;
+
+    private ConfigurationManager configurationManager;
+
     private Logger logger;
     private PlayerActivityTask playerActivityTask;
 
@@ -27,32 +31,32 @@ public class Alexandria extends JavaPlugin {
         logger.info("Starting plugin");
 
         // Load singletons
-        ConfigurationManager.getInstance();
+        this.configurationManager = new ConfigurationManager(this);
 
         // Load configuration
         saveDefaultConfig();
-        ConfigurationManager.getInstance().readConfig(getConfig());
+
+        this.configurationManager.readConfig(getConfig());
 
         // Reload players
         PlayerManager.getInstance().reloadPlayers();
         this.logger.info("There are " + PlayerManager.getInstance().getPlayers().size() + " players stored");
 
         // Command handling
-        getCommand("banish").setExecutor(new BanishCommandHandler());
-        getCommand("tprequest").setExecutor(new TeleportRequestCommandHandler());
-        getCommand("tpdecline").setExecutor(new TeleportDeclineCommandHandler());
-        getCommand("tpaccept").setExecutor(new TeleportAcceptCommandHandler());
-        getCommand("afk").setExecutor(new AfkCommandHandler());
+        getCommand("banish").setExecutor(new BanishCommandHandler(this));
+        getCommand("tprequest").setExecutor(new TeleportRequestCommandHandler(this));
+        getCommand("tpdecline").setExecutor(new TeleportDeclineCommandHandler(this));
+        getCommand("tpaccept").setExecutor(new TeleportAcceptCommandHandler(this));
+        getCommand("afk").setExecutor(new AfkCommandHandler(this));
 
         // Command + tab handling
-        getCommand("setchatcolour").setExecutor(new SetChatColorCommandHandler());
-        getCommand("setchatcolour").setTabCompleter(new SetChatColorCommandHandler());
+        getCommand("setchatcolour").setExecutor(new SetChatColorCommandHandler(this));
+        getCommand("setchatcolour").setTabCompleter(new SetChatColorCommandHandler(this));
 
         this.registerListeners();
 
         if (ENABLE_AFK_CHECK) {
-            this.playerActivityTask = new PlayerActivityTask();
-            this.playerActivityTask.runTaskTimer(this, 20L, 20L);
+            Scheduler.runTaskTimer(this, new PlayerActivityTask(), 20L, 20L);
         }
 
         logger.info("Finished");
@@ -62,9 +66,9 @@ public class Alexandria extends JavaPlugin {
      * Register the listeners.
      */
     private void registerListeners() {
-        getServer().getPluginManager().registerEvents(new PlayerListener(), this);
-        getServer().getPluginManager().registerEvents(new BlockListener(), this);
-        getServer().getPluginManager().registerEvents(new EntityListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
+        getServer().getPluginManager().registerEvents(new BlockListener(this), this);
+        getServer().getPluginManager().registerEvents(new EntityListener(this), this);
     }
 
     @Override
@@ -72,12 +76,7 @@ public class Alexandria extends JavaPlugin {
         PlayerManager.getInstance().getPlayers().clear();
     }
 
-    /**
-     * Get the java plugin instance.
-     *
-     * @return the plugin instance
-     */
-    public static Alexandria getInstance() {
-        return instance;
+    public ConfigurationManager getConfigurationManager() {
+        return configurationManager;
     }
 }

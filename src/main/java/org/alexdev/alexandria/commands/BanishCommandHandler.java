@@ -21,6 +21,11 @@ import java.util.concurrent.TimeUnit;
 
 public class BanishCommandHandler implements CommandExecutor {
     private final int TELEPORT_RADIUS = 9000;
+    private final Alexandria plugin;
+
+    public BanishCommandHandler(Alexandria plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String commandName, String[] args) {
@@ -31,7 +36,7 @@ public class BanishCommandHandler implements CommandExecutor {
         Player player = (Player) sender;
 
         if (player.isOp()) {
-            player.removeMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY, Alexandria.getInstance());
+            player.removeMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY, this.plugin);
         }
 
         if (!player.getWorld().getName().equalsIgnoreCase("world")) {
@@ -56,7 +61,7 @@ public class BanishCommandHandler implements CommandExecutor {
                 .append(Component.text("Finding a safe location for you...", Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC)))
                 .build());
 
-        Location safeLocation = TeleportUtils.getSafeLocationInRadius(TELEPORT_RADIUS, Bukkit.getServer().getWorld("world"));
+        Location safeLocation = TeleportUtils.getSafeLocationInRadius(this.plugin, TELEPORT_RADIUS, Bukkit.getServer().getWorld("world"));
 
         if (safeLocation == null) {
             player.sendMessage(Component.text()
@@ -74,7 +79,7 @@ public class BanishCommandHandler implements CommandExecutor {
                     .append(Component.text("You will not be able to use this command again for 24 hours", Style.style(NamedTextColor.WHITE, TextDecoration.BOLD)))
                             .build());
 
-            player.setMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY, new FixedMetadataValue(Alexandria.getInstance(), TimeUtil.getUnixTime()));
+            player.setMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY, new FixedMetadataValue(this.plugin, TimeUtil.getUnixTime()));
         });
 
         return true;

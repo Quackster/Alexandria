@@ -23,6 +23,11 @@ import java.util.concurrent.TimeUnit;
 
 public class TeleportRequestCommandHandler implements CommandExecutor {
     private final int TELEPORT_RADIUS = 9500;
+    private final Alexandria plugin;
+
+    public TeleportRequestCommandHandler(Alexandria plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String commandName, String[] args) {
@@ -56,7 +61,7 @@ public class TeleportRequestCommandHandler implements CommandExecutor {
         String metadataKey = MetadataKeys.TELEPORT_REQUEST_TIME_SINCE;
 
         if (player.isOp()) {
-            player.removeMetadata(metadataKey, Alexandria.getInstance());
+            player.removeMetadata(metadataKey, this.plugin);
         }
 
         if (!player.getWorld().getName().equalsIgnoreCase("world")) {

@@ -3,6 +3,7 @@ authors: [Cleopatra_Vll]
 version: 0.1
 main: org.alexdev.alexandria.Alexandria
 api-version: 1.20
+folia-supported: true
 
 commands:
   setchatcolour:

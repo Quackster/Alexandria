@@ -9,10 +9,12 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class ConfigurationManager {
     private static ConfigurationManager instance;
+    private final Alexandria plugin;
     private Logger logger;// = BattleCTF.P.getLogger();
 
-    public ConfigurationManager() {
-        this.logger = Alexandria.getInstance().getLogger();
+    public ConfigurationManager(Alexandria plugin) {
+        this.plugin = plugin;
+        this.logger = this.plugin.getLogger();
     }
 
     /**
@@ -21,21 +23,8 @@ public class ConfigurationManager {
      * @param savedConfig the existing file configuration
      */
     public void readConfig(FileConfiguration savedConfig) {
-        Alexandria.getInstance().saveDefaultConfig();
-        YamlConfiguration.loadConfiguration(new File(Alexandria.getInstance().getDataFolder().getAbsolutePath(), "file.test"));
+        this.plugin.saveDefaultConfig();
+        // YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder().getAbsolutePath(), "file.test"));
         //this.variable = savedConfig.getBoolean("variable",false);
-    }
-
-    /**
-     * Get configuration singleton.
-     *
-     * @return the configuration instance
-     */
-    public static ConfigurationManager getInstance() {
-        if (instance == null) {
-            instance = new ConfigurationManager();
-        }
-
-        return instance;
     }
 }

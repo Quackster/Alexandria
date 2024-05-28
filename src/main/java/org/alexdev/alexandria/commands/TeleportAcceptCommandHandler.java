@@ -22,7 +22,11 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class TeleportAcceptCommandHandler implements CommandExecutor {
-    private final int TELEPORT_RADIUS = 9500;
+    private final Alexandria plugin;
+
+    public TeleportAcceptCommandHandler(Alexandria plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String commandName, String[] args) {
@@ -80,7 +84,7 @@ public class TeleportAcceptCommandHandler implements CommandExecutor {
                     .append(Component.text("You will not be able to use this command again for 24 hours", Style.style(NamedTextColor.WHITE, TextDecoration.BOLD)))
                     .build());
 
-            target.setMetadata(MetadataKeys.TELEPORT_REQUEST_TIME_SINCE, new FixedMetadataValue(Alexandria.getInstance(), TimeUtil.getUnixTime()));
+            target.setMetadata(MetadataKeys.TELEPORT_REQUEST_TIME_SINCE, new FixedMetadataValue(this.plugin, TimeUtil.getUnixTime()));
         });
 
         return true;

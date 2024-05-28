@@ -24,6 +24,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SetChatColorCommandHandler implements TabExecutor {
+    private final Alexandria plugin;
+
+    public SetChatColorCommandHandler(Alexandria plugin) {
+        this.plugin = plugin;
+    }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String commandName, String[] args) {
         if (!(sender instanceof Player)) {
@@ -41,7 +47,7 @@ public class SetChatColorCommandHandler implements TabExecutor {
                     .append(Component.text("Chat color has been reset", Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC)))
                     .build());
 
-            player.removeMetadata(MetadataKeys.CHAT_COLOR, Alexandria.getInstance());
+            player.removeMetadata(MetadataKeys.CHAT_COLOR, this.plugin);
             return true;
         }
 
@@ -59,7 +65,7 @@ public class SetChatColorCommandHandler implements TabExecutor {
                 .append(Component.text(chatColor.getName(), Style.style(TextColor.color(chatColor.getRed(), chatColor.getGreen(), chatColor.getBlue()))))
                 .build());
 
-        player.setMetadata(MetadataKeys.CHAT_COLOR, new FixedMetadataValue(Alexandria.getInstance(), chatColor.getName()));
+        player.setMetadata(MetadataKeys.CHAT_COLOR, new FixedMetadataValue(this.plugin, chatColor.getName()));
         player.displayName(Component.text(player.getName(), Style.style(TextColor.color(chatColor.getRed(), chatColor.getGreen(), chatColor.getBlue()))));
 
         return true;

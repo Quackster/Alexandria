@@ -1,5 +1,6 @@
 package org.alexdev.alexandria.listeners;
 
+import org.alexdev.alexandria.Alexandria;
 import org.alexdev.alexandria.util.BlockUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -8,7 +9,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -20,9 +20,11 @@ import java.util.Random;
 
 public class EntityListener implements Listener {
     private final Random random;
+    private final Alexandria plugin;
 
-    public EntityListener() {
+    public EntityListener(Alexandria plugin) {
         this.random = new Random();
+        this.plugin = plugin;
     }
 
     @EventHandler

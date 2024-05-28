@@ -27,6 +27,12 @@ import org.bukkit.metadata.FixedMetadataValue;
 import java.util.concurrent.TimeUnit;
 
 public class PlayerListener implements Listener {
+    private final Alexandria plugin;
+
+    public PlayerListener(Alexandria plugin) {
+        this.plugin = plugin;
+    }
+
     @EventHandler
     public void onPlayerJoin(final PlayerJoinEvent event) {
         Player player = event.getPlayer();
@@ -151,7 +157,7 @@ public class PlayerListener implements Listener {
             long secondsSince = player.getMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY).get(0).asLong();
 
             if (secondsSince + TimeUnit.HOURS.toSeconds(24) > TimeUtil.getUnixTime()) {
-                player.removeMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY, Alexandria.getInstance());
+                player.removeMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY, this.plugin);
 
                 player.sendMessage(Component.text()
                         .append(Component.text("The ", Style.style(NamedTextColor.GRAY)))

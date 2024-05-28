@@ -22,6 +22,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.TimeUnit;
 
 public class AfkCommandHandler implements CommandExecutor {
+    private final Alexandria plugin;
+
+    public AfkCommandHandler(Alexandria plugin) {
+        this.plugin = plugin;
+    }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String commandName, String[] args) {
         if (!(sender instanceof Player)) {

@@ -22,6 +22,11 @@ import java.util.UUID;
 
 public class TeleportDeclineCommandHandler implements CommandExecutor {
     private final int TELEPORT_RADIUS = 9500;
+    private final Alexandria plugin;
+
+    public TeleportDeclineCommandHandler(Alexandria plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String commandName, String[] args) {
