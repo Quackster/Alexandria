@@ -10,12 +10,14 @@ import org.alexdev.alexandria.managers.PlayerManager;
 import org.alexdev.alexandria.managers.PluginPlayer;
 import org.alexdev.alexandria.util.MetadataKeys;
 import org.alexdev.alexandria.util.enums.Color;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -42,12 +44,12 @@ public class SetChatColorCommandHandler implements TabExecutor {
 
         System.out.println(String.join(",", args));
 
-        if (args.length < 1 && player.hasMetadata(MetadataKeys.CHAT_COLOR)) {
+        if (args.length < 1 && player.getPersistentDataContainer().has(new NamespacedKey(this.plugin, MetadataKeys.CHAT_COLOR))) {
             player.sendMessage(Component.text()
                     .append(Component.text("Chat color has been reset", Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC)))
                     .build());
 
-            player.removeMetadata(MetadataKeys.CHAT_COLOR, this.plugin);
+            player.getPersistentDataContainer().remove(new NamespacedKey(this.plugin, MetadataKeys.CHAT_COLOR));
             return true;
         }
 
@@ -65,7 +67,7 @@ public class SetChatColorCommandHandler implements TabExecutor {
                 .append(Component.text(chatColor.getName(), Style.style(TextColor.color(chatColor.getRed(), chatColor.getGreen(), chatColor.getBlue()))))
                 .build());
 
-        player.setMetadata(MetadataKeys.CHAT_COLOR, new FixedMetadataValue(this.plugin, chatColor.getName()));
+        player.getPersistentDataContainer().set(new NamespacedKey(this.plugin, MetadataKeys.CHAT_COLOR), PersistentDataType.STRING, chatColor.getName());
         player.displayName(Component.text(player.getName(), Style.style(TextColor.color(chatColor.getRed(), chatColor.getGreen(), chatColor.getBlue()))));
 
         return true;

@@ -14,6 +14,7 @@ import org.alexdev.alexandria.util.TimeUtil;
 import org.alexdev.alexandria.util.enums.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,6 +24,7 @@ import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.concurrent.TimeUnit;
 
@@ -89,10 +91,17 @@ public class PlayerListener implements Listener {
             player.getInventory().addItem(new ItemStack(Material.OAK_PLANKS, 16));
         }
 
-        if (player.hasMetadata(MetadataKeys.CHAT_COLOR)) {
-            String chatColorName = player.getMetadata(MetadataKeys.CHAT_COLOR).get(0).asString();
-            Color chatColor = Color.valueOf(chatColorName.toUpperCase());
-            player.displayName(Component.text(player.getName(), Style.style(TextColor.color(chatColor.getRed(), chatColor.getGreen(), chatColor.getBlue()))));
+        if (player.getPersistentDataContainer().has(new NamespacedKey(this.plugin, MetadataKeys.CHAT_COLOR))) {
+            String chatColorName = player.getPersistentDataContainer().get(new NamespacedKey(this.plugin, MetadataKeys.CHAT_COLOR), PersistentDataType.STRING);
+            Color chatColor = null;
+
+            if (chatColorName != null) {
+                chatColor = Color.valueOf(chatColorName.toUpperCase());
+            }
+
+            if (chatColor != null) {
+                player.displayName(Component.text(player.getName(), Style.style(TextColor.color(chatColor.getRed(), chatColor.getGreen(), chatColor.getBlue()))));
+            }
         }
     }
 

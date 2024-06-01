@@ -53,8 +53,8 @@ public class EntityListener implements Listener {
 
                 int maxMembraneChance = 1;
 
-                if (handItem.containsEnchantment(Enchantment.LOOT_BONUS_MOBS)) {
-                    int lootingLevel = handItem.getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
+                if (handItem.containsEnchantment(Enchantment.LOOTING)) {
+                    int lootingLevel = handItem.getEnchantmentLevel(Enchantment.LOOTING);
 
                     switch (lootingLevel) {
                         case 1:
@@ -95,29 +95,35 @@ public class EntityListener implements Listener {
         }
 
         if (event.getEntityType() == EntityType.DROWNED) {
-            if (event.getEntity().getKiller() != null) {
-                ItemStack handItem = event.getEntity().getKiller().getInventory().getItemInMainHand();
-                int maxEggChance = 1;
-
-                if (handItem.containsEnchantment(Enchantment.LOOT_BONUS_MOBS)) {
-                    int lootingLevel = handItem.getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
-
-                    switch (lootingLevel) {
-                        case 1:
-                            maxEggChance = 2;
-                            break;
-                        case 2:
-                            maxEggChance = 3;
-                            break;
-                        case 3:
-                            maxEggChance = 4;
-                            break;
-                    }
-                }
-
-                int eggDropCount = random.nextInt(maxEggChance) + 1; // Randomly decide the drop count
-                event.getDrops().add(new ItemStack(Material.TURTLE_EGG, eggDropCount));
+            if (event.getEntity().getKiller() == null) {
+                return;
             }
+
+            if (event.getEntity().getLocation().getBlock().getType() != Material.WATER) {
+                return;
+            }
+
+            ItemStack handItem = event.getEntity().getKiller().getInventory().getItemInMainHand();
+            int maxEggChance = 1;
+
+            if (handItem.containsEnchantment(Enchantment.LOOTING)) {
+                int lootingLevel = handItem.getEnchantmentLevel(Enchantment.LOOTING);
+
+                switch (lootingLevel) {
+                    case 1:
+                        maxEggChance = 2;
+                        break;
+                    case 2:
+                        maxEggChance = 3;
+                        break;
+                    case 3:
+                        maxEggChance = 4;
+                        break;
+                }
+            }
+
+            int eggDropCount = random.nextInt(maxEggChance) + 1; // Randomly decide the drop count
+            event.getDrops().add(new ItemStack(Material.TURTLE_EGG, eggDropCount));
         }
     }
 
