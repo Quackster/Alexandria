@@ -48,6 +48,7 @@ public class Alexandria extends JavaPlugin {
         getCommand("tpdecline").setExecutor(new TeleportDeclineCommandHandler(this));
         getCommand("tpaccept").setExecutor(new TeleportAcceptCommandHandler(this));
         getCommand("afk").setExecutor(new AfkCommandHandler(this));
+        getCommand("chunkage").setExecutor(new ChunkAgeCommandHandler(this));
 
         // Command + tab handling
         getCommand("setchatcolour").setExecutor(new SetChatColorCommandHandler(this));

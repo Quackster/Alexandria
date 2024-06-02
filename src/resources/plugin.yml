@@ -6,6 +6,9 @@ api-version: 1.20
 folia-supported: true
 
 commands:
+  chunkage:
+    description: gets the age of the chunk in Minecraft ticks and hours/seconds
+    permission: alexandria.use
   setchatcolour:
     aliases:
       - setchatcolor
