@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public class EntityListener implements Listener {
                     }
                 }
 
-                int membraneDropCount = random.nextInt(maxMembraneChance) + 1; // Randomly decide the drop count
+                int membraneDropCount = this.random.nextInt(maxMembraneChance) + 1; // Randomly decide the drop count
                 event.getDrops().add(new ItemStack(Material.PHANTOM_MEMBRANE, membraneDropCount));
             }
         }
@@ -77,12 +78,15 @@ public class EntityListener implements Listener {
 
     @EventHandler
     public void onEnderDragonDeathEvent(EntityDeathEvent event) {
+        var world = event.getEntity().getWorld();
+
         if (event.getEntityType() == EntityType.ENDER_DRAGON) {
             if (event.getEntity().getKiller() != null) {
-                event.getDrops().add(new ItemStack(Material.ELYTRA, 1));
-
-                if (Math.random() <= 0.10) {
-                    event.getDrops().add(new ItemStack(Material.SHULKER_SHELL, 1));
+                for (var player : world.getNearbyPlayers(world.getSpawnLocation(), 120)) {
+                    world.dropItemNaturally(player.getLocation(), new ItemStack(Material.ELYTRA, 1));
+                    world.dropItemNaturally(player.getLocation(), new ItemStack(Material.SHULKER_SHELL, this.random.nextInt(5, 10)));
+                    //event.getDrops().add(new ItemStack(Material.ELYTRA, 1));
+                    //event.getDrops().add(new ItemStack(Material.SHULKER_SHELL, this.random.nextInt(5, 10)));
                 }
             }
         }
@@ -135,7 +139,16 @@ public class EntityListener implements Listener {
             if (!BlockUtil.isBreakableBlockOrSpawner(block)) {
                 blocks.remove(block);
             }
+
+            //if (!BlockUtil.isBreakableBlockOrChest(null, block)) {
+            //    blocks.remove(block);
+            //}
         }
+    }
+
+    @EventHandler
+    public void onVehicleDestroyEvent(VehicleDestroyEvent event) {
+
     }
 
 }

@@ -54,10 +54,12 @@ public class PluginPlayer extends PluginAttributable {
         this.afkLocation = this.player.getLocation().clone();
         this.isAfk = true;
 
-        Bukkit.getServer().sendMessage(Component.text()
-                .append(Component.text(this.player.getName(), Style.style(NamedTextColor.GRAY)))
-                .append(Component.text(" is now AFK", Style.style(NamedTextColor.WHITE)))
-                .build());
+        if (Alexandria.ALERT_AFK_MESSAGE) {
+            Bukkit.getServer().sendMessage(Component.text()
+                    .append(Component.text(this.player.getName(), Style.style(NamedTextColor.GRAY)))
+                    .append(Component.text(" is now AFK", Style.style(NamedTextColor.WHITE)))
+                    .build());
+        }
 
         this.player.playerListName(Component.text()
                 .append(Component.text("afk* ", Style.style(NamedTextColor.GRAY)))
@@ -75,10 +77,12 @@ public class PluginPlayer extends PluginAttributable {
 
         this.isAfk = false;
 
-        Bukkit.getServer().sendMessage(Component.text()
-                .append(Component.text(this.player.getName(), Style.style(NamedTextColor.GRAY)))
-                .append(Component.text(" is no longer AFK", Style.style(NamedTextColor.WHITE)))
-                .build());
+        if (Alexandria.ALERT_AFK_MESSAGE) {
+            Bukkit.getServer().sendMessage(Component.text()
+                    .append(Component.text(this.player.getName(), Style.style(NamedTextColor.GRAY)))
+                    .append(Component.text(" is no longer AFK", Style.style(NamedTextColor.WHITE)))
+                    .build());
+        }
 
         this.player.playerListName(Component.text()
                 .append(Component.text(this.player.getName(), Style.style(NamedTextColor.WHITE)))

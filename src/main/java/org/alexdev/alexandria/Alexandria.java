@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 
 public class Alexandria extends JavaPlugin {
     public static final boolean ENABLE_AFK_CHECK = true;
+    public static final boolean ALERT_AFK_MESSAGE = true;
 
     private static Alexandria instance;
 

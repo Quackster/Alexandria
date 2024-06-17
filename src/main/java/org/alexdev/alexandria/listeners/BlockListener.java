@@ -33,6 +33,11 @@ public class BlockListener implements Listener {
             event.setCancelled(true);
             return;
         }
+
+        /*if (!BlockUtil.isBreakableBlockOrChest(event.getPlayer(), block)) {
+            event.setCancelled(true);
+            return;
+        }*/
     }
 
     @EventHandler
@@ -43,6 +48,10 @@ public class BlockListener implements Listener {
             if (!BlockUtil.isBreakableBlockOrSpawner(block)) {
                 blocks.remove(block);
             }
+
+            /*if (!BlockUtil.isBreakableBlockOrChest(null, block)) {
+                blocks.remove(block);
+            }*/
         }
     }
 }

@@ -10,6 +10,7 @@ import org.alexdev.alexandria.util.TeleportUtils;
 import org.alexdev.alexandria.util.TimeUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 public class BanishCommandHandler implements CommandExecutor {
     private final int TELEPORT_RADIUS = 9000;
+    private final int NETHER_TELEPORT_RADIUS = 4500;
     private final Alexandria plugin;
 
     public BanishCommandHandler(Alexandria plugin) {
@@ -39,9 +41,19 @@ public class BanishCommandHandler implements CommandExecutor {
             player.removeMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY, this.plugin);
         }
 
+        /*
         if (!player.getWorld().getName().equalsIgnoreCase("world")) {
             player.sendMessage(Component.text()
                     .append(Component.text("You are not in the overworld!", Style.style(NamedTextColor.RED)))
+                    .build());
+            return true;
+        }
+        */
+
+        if (player.getWorld().getEnvironment() != World.Environment.NORMAL &&
+                player.getWorld().getEnvironment() != World.Environment.NETHER) {
+            player.sendMessage(Component.text()
+                    .append(Component.text("You are not in the overworld or Nether!", Style.style(NamedTextColor.RED)))
                     .build());
             return true;
         }
@@ -61,7 +73,7 @@ public class BanishCommandHandler implements CommandExecutor {
                 .append(Component.text("Finding a safe location for you...", Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC)))
                 .build());
 
-        Location safeLocation = TeleportUtils.getSafeLocationInRadius(this.plugin, TELEPORT_RADIUS, Bukkit.getServer().getWorld("world"));
+        Location safeLocation = TeleportUtils.getSafeLocationInRadius(this.plugin, player.getWorld().getEnvironment() == World.Environment.NORMAL ? TELEPORT_RADIUS : NETHER_TELEPORT_RADIUS, player.getWorld());
 
         if (safeLocation == null) {
             player.sendMessage(Component.text()
