@@ -9,6 +9,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -147,8 +148,13 @@ public class EntityListener implements Listener {
     }
 
     @EventHandler
-    public void onVehicleDestroyEvent(VehicleDestroyEvent event) {
+    public void onEntityChangeBlockEvent(EntityChangeBlockEvent event) {
+        if (event.getEntity().getType() != EntityType.ENDERMAN) {
+            return;
+        }
 
+        // Fuck off Endermen
+        event.setCancelled(true);
     }
 
 }
