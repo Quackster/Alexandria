@@ -15,21 +15,27 @@ import org.bukkit.entity.minecart.StorageMinecart;
 
 public class BlockUtil {
     public static boolean isBreakableBlockOrSpawner(Block block) {
-        if (block.getType() != Material.SPAWNER) {
-            return true;
+        if (block.getType() == Material.TRIAL_SPAWNER || block.getType() == Material.VAULT) {
+            return false;
         }
 
-        if (!(block.getState() instanceof CreatureSpawner)) {
-            return true;
+        if (block.getType() == Material.SPAWNER) {
+            if (block.getState() instanceof CreatureSpawner spawner) {
+                return spawner.getSpawnedType() == EntityType.SILVERFISH;
+            }
         }
 
-        CreatureSpawner spawner = (CreatureSpawner) block.getState();
-
-        if (spawner.getSpawnedType() == EntityType.SILVERFISH) {
-            return true;
+        /*
+        if (block.getState() instanceof org.bukkit.block.TrialSpawner trialSpawner) {
+            return false;
         }
 
-        return false;
+        if (block.getState() instanceof org.bukkit.block.Vault vault) {
+            return false;
+        }
+        */
+
+        return true;
     }
 
     /*

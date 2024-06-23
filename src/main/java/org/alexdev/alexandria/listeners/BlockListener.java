@@ -24,9 +24,6 @@ public class BlockListener implements Listener {
 
     @EventHandler
     public void onBlockBreakEvent(BlockBreakEvent event) {
-        if (event.getPlayer().getGameMode() == GameMode.CREATIVE)
-            return;
-
         Block block = event.getBlock();
 
         if (!BlockUtil.isBreakableBlockOrSpawner(block)) {

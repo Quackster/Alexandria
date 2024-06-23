@@ -85,7 +85,7 @@ public class EntityListener implements Listener {
             if (event.getEntity().getKiller() != null) {
                 for (var player : world.getNearbyPlayers(world.getSpawnLocation(), 120)) {
                     world.dropItemNaturally(player.getLocation(), new ItemStack(Material.ELYTRA, 1));
-                    world.dropItemNaturally(player.getLocation(), new ItemStack(Material.SHULKER_SHELL, this.random.nextInt(5, 10)));
+                    world.dropItemNaturally(player.getLocation(), new ItemStack(Material.SHULKER_SHELL, 4 + this.random.nextInt(5, 10)));
                     //event.getDrops().add(new ItemStack(Material.ELYTRA, 1));
                     //event.getDrops().add(new ItemStack(Material.SHULKER_SHELL, this.random.nextInt(5, 10)));
                 }
