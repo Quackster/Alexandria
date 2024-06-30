@@ -2,12 +2,14 @@ package org.alexdev.alexandria;
 
 import com.loohp.lotterysix.objects.Scheduler;
 import org.alexdev.alexandria.commands.*;
+import org.alexdev.alexandria.listeners.AnimalListener;
 import org.alexdev.alexandria.listeners.BlockListener;
 import org.alexdev.alexandria.listeners.EntityListener;
 import org.alexdev.alexandria.listeners.PlayerListener;
 import org.alexdev.alexandria.configuration.ConfigurationManager;
 import org.alexdev.alexandria.managers.PlayerManager;
 import org.alexdev.alexandria.tasks.PlayerActivityTask;
+import org.alexdev.alexandria.util.RecipeGenerator;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -61,6 +63,8 @@ public class Alexandria extends JavaPlugin {
             Scheduler.runTaskTimer(this, new PlayerActivityTask(), 20L, 20L);
         }
 
+        RecipeGenerator.createSlabConversionList(this);
+
         logger.info("Finished");
     }
 
@@ -71,6 +75,7 @@ public class Alexandria extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         getServer().getPluginManager().registerEvents(new BlockListener(this), this);
         getServer().getPluginManager().registerEvents(new EntityListener(this), this);
+        getServer().getPluginManager().registerEvents(new AnimalListener(this), this);
     }
 
     @Override
