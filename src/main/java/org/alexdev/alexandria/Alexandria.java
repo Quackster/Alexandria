@@ -2,10 +2,7 @@ package org.alexdev.alexandria;
 
 import com.loohp.lotterysix.objects.Scheduler;
 import org.alexdev.alexandria.commands.*;
-import org.alexdev.alexandria.listeners.AnimalListener;
-import org.alexdev.alexandria.listeners.BlockListener;
-import org.alexdev.alexandria.listeners.EntityListener;
-import org.alexdev.alexandria.listeners.PlayerListener;
+import org.alexdev.alexandria.listeners.*;
 import org.alexdev.alexandria.configuration.ConfigurationManager;
 import org.alexdev.alexandria.managers.PlayerManager;
 import org.alexdev.alexandria.tasks.PlayerActivityTask;
@@ -76,6 +73,7 @@ public class Alexandria extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BlockListener(this), this);
         getServer().getPluginManager().registerEvents(new EntityListener(this), this);
         getServer().getPluginManager().registerEvents(new AnimalListener(this), this);
+        getServer().getPluginManager().registerEvents(new VillagerListener(this), this);
     }
 
     @Override
