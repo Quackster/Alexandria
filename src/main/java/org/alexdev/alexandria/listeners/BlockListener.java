@@ -6,11 +6,13 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,19 @@ public class BlockListener implements Listener {
             event.setCancelled(true);
             return;
         }*/
+    }
+
+    @EventHandler
+    public void onBuddingAmethystBlockBreakEvent(BlockBreakEvent event) {
+        Block block = event.getBlock();
+
+        if (block.getType() == Material.BUDDING_AMETHYST) {
+            ItemStack handItem = event.getPlayer().getInventory().getItemInMainHand();
+
+            if (handItem.containsEnchantment(Enchantment.SILK_TOUCH)) {
+                block.getWorld().dropItem(block.getLocation(), new ItemStack(Material.BUDDING_AMETHYST, 1));
+            }
+        }
     }
 
     @EventHandler
