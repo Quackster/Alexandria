@@ -9,10 +9,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityChangeBlockEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -134,6 +131,7 @@ public class EntityListener implements Listener {
 
     @EventHandler
     public void onEntityExplodeEvent(EntityExplodeEvent event) {
+
         List<Block> blocks = event.blockList();
 
         for (Block block : new ArrayList<>(blocks)) {
@@ -157,4 +155,17 @@ public class EntityListener implements Listener {
         event.setCancelled(true);
     }
 
+    @EventHandler
+    public void onGhastEntityExplode(EntityExplodeEvent event) {
+        if (event.getEntityType() == EntityType.FIREBALL) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onGhastExplosionPrime(ExplosionPrimeEvent event) {
+        if (event.getEntityType() == EntityType.FIREBALL) {
+            event.setFire(false);
+        }
+    }
 }
