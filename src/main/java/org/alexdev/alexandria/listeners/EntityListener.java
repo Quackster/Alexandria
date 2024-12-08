@@ -75,6 +75,37 @@ public class EntityListener implements Listener {
     }
 
     @EventHandler
+    public void onHuskDeathEvent(EntityDeathEvent event) {
+        if (event.getEntityType() == EntityType.HUSK) {
+            int maxSandDropChance = 2;
+
+            if (event.getEntity().getKiller() != null) {
+                Player killer = event.getEntity().getKiller();
+                ItemStack handItem = killer.getInventory().getItemInMainHand();
+
+                if (handItem.containsEnchantment(Enchantment.LOOTING)) {
+                    int lootingLevel = handItem.getEnchantmentLevel(Enchantment.LOOTING);
+
+                    switch (lootingLevel) {
+                        case 1:
+                            maxSandDropChance += 1;
+                            break;
+                        case 2:
+                            maxSandDropChance += 2;
+                            break;
+                        case 3:
+                            maxSandDropChance += 3;
+                            break;
+                    }
+                }
+            }
+
+            int sandDropCount = this.random.nextInt(maxSandDropChance) + 1; // Randomly decide the drop count
+            event.getDrops().add(new ItemStack(Material.SAND, sandDropCount));
+        }
+    }
+
+    @EventHandler
     public void onEnderDragonDeathEvent(EntityDeathEvent event) {
         var world = event.getEntity().getWorld();
 
