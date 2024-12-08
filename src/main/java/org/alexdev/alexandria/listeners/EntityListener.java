@@ -189,14 +189,15 @@ public class EntityListener implements Listener {
     @EventHandler
     public void onGhastEntityExplode(EntityExplodeEvent event) {
         if (event.getEntityType() == EntityType.FIREBALL) {
-            event.setCancelled(true);
+            event.blockList().clear();
         }
     }
 
+    /*
     @EventHandler
     public void onGhastExplosionPrime(ExplosionPrimeEvent event) {
         if (event.getEntityType() == EntityType.FIREBALL) {
-            event.setFire(false);
+            event.().clear();
         }
-    }
+    }*/
 }
