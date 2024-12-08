@@ -51,17 +51,8 @@ public class VillagerListener implements Listener {
 
 
             if (target instanceof Villager villager) {
-                // Villager target = interactions.get(event.getPlayer().getName());
-
-                // if we're just closed our inventory
                 if (event.getView().getTitle().equals("Villager's Inventory")) {
-
-
-                    this.plugin.getLogger().info("UNIQUE ID  2 " + uniqueId);
-
-
-                    // copy the edited inventory back into the villagers inventory
-                    for (int i = 0; i < 8; i++) { // careful to only select the first 8 slots
+                    for (int i = 0; i < 8; i++) {
                         villager.getInventory().setItem(i, event.getInventory().getItem(i));
                     }
 
