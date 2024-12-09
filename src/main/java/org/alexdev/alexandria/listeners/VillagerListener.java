@@ -47,9 +47,6 @@ public class VillagerListener implements Listener {
             var uniqueId = (UUID) event.getPlayer().getMetadata(MetadataKeys.VILLAGER_INVENTORY_EDIT).get(0).value();
             var target = event.getPlayer().getWorld().getEntity(uniqueId);
 
-            this.plugin.getLogger().info("UNIQUE ID " + uniqueId);
-
-
             if (target instanceof Villager villager) {
                 if (event.getView().getTitle().equals("Villager's Inventory")) {
                     for (int i = 0; i < 8; i++) {
