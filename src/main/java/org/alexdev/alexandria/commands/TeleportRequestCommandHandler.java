@@ -64,12 +64,13 @@ public class TeleportRequestCommandHandler implements CommandExecutor {
             player.removeMetadata(metadataKey, this.plugin);
         }
 
+        /*
         if (!player.getWorld().getName().equalsIgnoreCase("world")) {
             player.sendMessage(Component.text()
                     .append(Component.text("You are not in the overworld!", Style.style(NamedTextColor.RED)))
                     .build());
             return true;
-        }
+        }*/
 
         if (player.hasMetadata(metadataKey)) {
             long secondsSince = player.getMetadata(metadataKey).get(0).asLong();
