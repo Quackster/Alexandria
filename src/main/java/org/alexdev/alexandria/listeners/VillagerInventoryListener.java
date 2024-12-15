@@ -1,7 +1,6 @@
 package org.alexdev.alexandria.listeners;
 
 import org.alexdev.alexandria.util.MetadataKeys;
-import org.alexdev.alexandria.util.TimeUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -19,11 +18,11 @@ import org.bukkit.metadata.FixedMetadataValue;
 import java.util.Random;
 import java.util.UUID;
 
-public class VillagerListener implements Listener {
+public class VillagerInventoryListener implements Listener {
     private final Random random;
     private final Alexandria plugin;
 
-    public VillagerListener(Alexandria plugin) {
+    public VillagerInventoryListener(Alexandria plugin) {
         this.random = new Random();
         this.plugin = plugin;
     }

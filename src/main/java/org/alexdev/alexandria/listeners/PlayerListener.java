@@ -71,7 +71,7 @@ public class PlayerListener implements Listener {
 
         player.sendMessage(Component.text()
                 .append(Component.text("Have any issues? Please contact ", Style.style(NamedTextColor.GRAY)))
-                .append(Component.text("@AIexandriaQueen ", Style.style(NamedTextColor.BLUE)))
+                .append(Component.text("@Cuntypatra ", Style.style(NamedTextColor.BLUE)))
                 .append(Component.text("on Twitter ", Style.style(NamedTextColor.GRAY)))
                 .build());
 

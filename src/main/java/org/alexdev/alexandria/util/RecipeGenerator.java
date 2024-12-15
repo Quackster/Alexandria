@@ -23,6 +23,14 @@ public class RecipeGenerator {
         recipes.add(createSlabConversion(plugin, Material.BAMBOO_SLAB, Material.BAMBOO_PLANKS));
         recipes.add(createSlabConversion(plugin, Material.CHERRY_SLAB, Material.CHERRY_PLANKS));
         recipes.add(createSlabConversion(plugin, Material.MANGROVE_SLAB, Material.MANGROVE_PLANKS));
+        recipes.add(createSlabConversion(plugin, Material.SANDSTONE_SLAB, Material.SANDSTONE));
+        recipes.add(createSlabConversion(plugin, Material.STONE_SLAB, Material.STONE));
+        recipes.add(createSlabConversion(plugin, Material.COBBLESTONE_SLAB, Material.COBBLESTONE));
+        recipes.add(createSlabConversion(plugin, Material.DEEPSLATE_BRICK_SLAB, Material.DEEPSLATE_BRICKS));
+        recipes.add(createSlabConversion(plugin, Material.DEEPSLATE_TILE_SLAB, Material.DEEPSLATE_TILES));
+        recipes.add(createSlabConversion(plugin, Material.COBBLED_DEEPSLATE_SLAB, Material.COBBLED_DEEPSLATE));
+        recipes.add(createSlabConversion(plugin, Material.POLISHED_DEEPSLATE_SLAB, Material.POLISHED_DEEPSLATE));
+
         recipes.forEach(Bukkit::addRecipe);
         return recipes;
     }

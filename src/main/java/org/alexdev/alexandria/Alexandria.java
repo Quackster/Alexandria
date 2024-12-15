@@ -7,8 +7,6 @@ import org.alexdev.alexandria.configuration.ConfigurationManager;
 import org.alexdev.alexandria.managers.PlayerManager;
 import org.alexdev.alexandria.tasks.PlayerActivityTask;
 import org.alexdev.alexandria.util.RecipeGenerator;
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
@@ -73,7 +71,8 @@ public class Alexandria extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BlockListener(this), this);
         getServer().getPluginManager().registerEvents(new EntityListener(this), this);
         getServer().getPluginManager().registerEvents(new AnimalListener(this), this);
-        getServer().getPluginManager().registerEvents(new VillagerListener(this), this);
+        getServer().getPluginManager().registerEvents(new VillagerInventoryListener(this), this);
+        getServer().getPluginManager().registerEvents(new VillagerTradeListener(this), this);
     }
 
     @Override
