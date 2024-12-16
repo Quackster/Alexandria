@@ -82,10 +82,12 @@ public class TeleportAcceptCommandHandler implements CommandExecutor {
                     .append(Component.text("You have been teleported to " + player.getName() + "!", Style.style(NamedTextColor.YELLOW)))
                     .build());
 
+            /*
             target.sendMessage(Component.text()
                     .append(Component.text("You will not be able to use this command again for 24 hours", Style.style(NamedTextColor.WHITE, TextDecoration.BOLD)))
                     .build());
 
+             */
             target.setMetadata(MetadataKeys.TELEPORT_REQUEST_TIME_SINCE, new FixedMetadataValue(this.plugin, TimeUtil.getUnixTime()));
         });
 

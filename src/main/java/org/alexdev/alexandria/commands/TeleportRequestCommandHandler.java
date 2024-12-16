@@ -60,9 +60,9 @@ public class TeleportRequestCommandHandler implements CommandExecutor {
 
         String metadataKey = MetadataKeys.TELEPORT_REQUEST_TIME_SINCE;
 
-        if (player.isOp()) {
-            player.removeMetadata(metadataKey, this.plugin);
-        }
+        // if (player.isOp()) {
+        player.removeMetadata(metadataKey, this.plugin);
+        // }
 
         /*
         if (!player.getWorld().getName().equalsIgnoreCase("world")) {

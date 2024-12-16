@@ -73,7 +73,7 @@ public class BanishCommandHandler implements CommandExecutor {
                 .append(Component.text("Finding a safe location for you...", Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC)))
                 .build());
 
-        Location safeLocation = TeleportUtils.getSafeLocationInRadius(this.plugin, player.getWorld().getEnvironment() == World.Environment.NORMAL ? TELEPORT_RADIUS : NETHER_TELEPORT_RADIUS, player.getWorld());
+        Location safeLocation = TeleportUtils.getSafeLocationInRadius(TELEPORT_RADIUS, player.getWorld());
 
         if (safeLocation == null) {
             player.sendMessage(Component.text()
