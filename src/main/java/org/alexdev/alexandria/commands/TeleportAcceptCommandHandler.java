@@ -8,7 +8,7 @@ import org.alexdev.alexandria.Alexandria;
 import org.alexdev.alexandria.managers.PlayerManager;
 import org.alexdev.alexandria.managers.PluginPlayer;
 import org.alexdev.alexandria.util.MetadataKeys;
-import org.alexdev.alexandria.util.TimeUtil;
+import org.alexdev.alexandria.util.TimeManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -19,7 +19,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class TeleportAcceptCommandHandler implements CommandExecutor {
     private final Alexandria plugin;
@@ -88,7 +87,7 @@ public class TeleportAcceptCommandHandler implements CommandExecutor {
                     .build());
 
              */
-            target.setMetadata(MetadataKeys.TELEPORT_REQUEST_TIME_SINCE, new FixedMetadataValue(this.plugin, TimeUtil.getUnixTime()));
+            target.setMetadata(MetadataKeys.TELEPORT_REQUEST_TIME_SINCE, new FixedMetadataValue(this.plugin, TimeManager.getUnixTime()));
         });
 
         return true;

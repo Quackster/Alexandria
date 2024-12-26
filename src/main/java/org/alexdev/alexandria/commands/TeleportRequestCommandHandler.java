@@ -8,15 +8,12 @@ import org.alexdev.alexandria.Alexandria;
 import org.alexdev.alexandria.managers.PlayerManager;
 import org.alexdev.alexandria.managers.PluginPlayer;
 import org.alexdev.alexandria.util.MetadataKeys;
-import org.alexdev.alexandria.util.TeleportUtils;
-import org.alexdev.alexandria.util.TimeUtil;
+import org.alexdev.alexandria.util.TimeManager;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
@@ -75,7 +72,7 @@ public class TeleportRequestCommandHandler implements CommandExecutor {
         if (player.hasMetadata(metadataKey)) {
             long secondsSince = player.getMetadata(metadataKey).get(0).asLong();
 
-            if (secondsSince + TimeUnit.HOURS.toSeconds(24) > TimeUtil.getUnixTime()) {
+            if (secondsSince + TimeUnit.HOURS.toSeconds(24) > TimeManager.getUnixTime()) {
                 player.sendMessage(Component.text()
                         .append(Component.text("Please wait 24 hours before using ", Style.style(NamedTextColor.RED)))
                         .append(Component.text("/tprequest " + target.getName() + " ", Style.style(NamedTextColor.GRAY, TextDecoration.ITALIC)))

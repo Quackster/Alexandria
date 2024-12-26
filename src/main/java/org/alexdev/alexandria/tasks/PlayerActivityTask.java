@@ -2,12 +2,9 @@ package org.alexdev.alexandria.tasks;
 
 import org.alexdev.alexandria.managers.PlayerManager;
 import org.alexdev.alexandria.managers.PluginPlayer;
-import org.alexdev.alexandria.util.TimeUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.concurrent.TimeUnit;
 
 public class PlayerActivityTask extends BukkitRunnable {
     public static final long AFK_THRESHOLD_SECONDS = 300;

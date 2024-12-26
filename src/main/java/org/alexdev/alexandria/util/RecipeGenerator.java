@@ -31,9 +31,17 @@ public class RecipeGenerator {
         recipes.add(createSlabConversion(plugin, Material.COBBLED_DEEPSLATE_SLAB, Material.COBBLED_DEEPSLATE));
         recipes.add(createSlabConversion(plugin, Material.POLISHED_DEEPSLATE_SLAB, Material.POLISHED_DEEPSLATE));
 
+        recipes.add(createBlockConversion(plugin, Material.DEEPSLATE, Material.COBBLED_DEEPSLATE));
         recipes.forEach(Bukkit::addRecipe);
         return recipes;
     }
+
+    private static ShapelessRecipe createBlockConversion(JavaPlugin plugin, Material input, Material output) {
+        ShapelessRecipe recipe = new ShapelessRecipe(new NamespacedKey(plugin, input.name().toLowerCase() + "_block_convert"), new ItemStack(output));
+        recipe.addIngredient(1, input);
+        return recipe;
+    }
+
     private static ShapelessRecipe createSlabConversion(JavaPlugin plugin, Material input, Material output) {
         ShapelessRecipe recipe = new ShapelessRecipe(new NamespacedKey(plugin, input.name().toLowerCase() + "_conversion"), new ItemStack(output));
         recipe.addIngredient(2, input);

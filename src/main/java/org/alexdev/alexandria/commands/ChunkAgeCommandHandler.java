@@ -3,11 +3,8 @@ package org.alexdev.alexandria.commands;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
-import net.kyori.adventure.text.format.TextDecoration;
 import org.alexdev.alexandria.Alexandria;
-import org.alexdev.alexandria.managers.PlayerManager;
-import org.alexdev.alexandria.managers.PluginPlayer;
-import org.alexdev.alexandria.util.TimeUtil;
+import org.alexdev.alexandria.util.TimeManager;
 import org.bukkit.Chunk;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -39,11 +36,11 @@ public class ChunkAgeCommandHandler implements CommandExecutor {
                 .append(Component.text(" is ", Style.style(NamedTextColor.RED)))
                 .append(Component.text(chunk.getInhabitedTime(), Style.style(NamedTextColor.WHITE)))
                 .append(Component.text(" ticks old, or ", Style.style(NamedTextColor.RED)))
-                .append(Component.text(TimeUtil.humanReadableTicks(chunk.getInhabitedTime()).getHours(), Style.style(NamedTextColor.WHITE)))
+                .append(Component.text(TimeManager.humanReadableTicks(chunk.getInhabitedTime()).getHours(), Style.style(NamedTextColor.WHITE)))
                 .append(Component.text(" hours, ", Style.style(NamedTextColor.RED)))
-                .append(Component.text(TimeUtil.humanReadableTicks(chunk.getInhabitedTime()).getMinutes(), Style.style(NamedTextColor.WHITE)))
+                .append(Component.text(TimeManager.humanReadableTicks(chunk.getInhabitedTime()).getMinutes(), Style.style(NamedTextColor.WHITE)))
                 .append(Component.text(" minutes, ", Style.style(NamedTextColor.RED)))
-                .append(Component.text(TimeUtil.humanReadableTicks(chunk.getInhabitedTime()).getHours(), Style.style(NamedTextColor.WHITE)))
+                .append(Component.text(TimeManager.humanReadableTicks(chunk.getInhabitedTime()).getHours(), Style.style(NamedTextColor.WHITE)))
                 .append(Component.text(" seconds old", Style.style(NamedTextColor.RED)))
                 .build());
 

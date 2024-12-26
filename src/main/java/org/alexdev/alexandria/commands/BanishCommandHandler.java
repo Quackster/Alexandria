@@ -7,8 +7,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.alexdev.alexandria.Alexandria;
 import org.alexdev.alexandria.util.MetadataKeys;
 import org.alexdev.alexandria.util.TeleportUtils;
-import org.alexdev.alexandria.util.TimeUtil;
-import org.bukkit.Bukkit;
+import org.alexdev.alexandria.util.TimeManager;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -61,7 +60,7 @@ public class BanishCommandHandler implements CommandExecutor {
         if (player.hasMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY)) {
             long secondsSince = player.getMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY).get(0).asLong();
 
-            if (secondsSince + TimeUnit.HOURS.toSeconds(24) > TimeUtil.getUnixTime()) {
+            if (secondsSince + TimeUnit.HOURS.toSeconds(24) > TimeManager.getUnixTime()) {
                 player.sendMessage(Component.text()
                         .append(Component.text("Please wait 24 hours before using /banish again", Style.style(NamedTextColor.RED)))
                         .build());
@@ -91,7 +90,7 @@ public class BanishCommandHandler implements CommandExecutor {
                     .append(Component.text("You will not be able to use this command again for 24 hours", Style.style(NamedTextColor.WHITE, TextDecoration.BOLD)))
                             .build());
 
-            player.setMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY, new FixedMetadataValue(this.plugin, TimeUtil.getUnixTime()));
+            player.setMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY, new FixedMetadataValue(this.plugin, TimeManager.getUnixTime()));
         });
 
         return true;

@@ -33,16 +33,14 @@
 	</properties>
 
 	<repositories>
-		<!-- PaperMC is used by default, you can change it to SpigotMC or Bukkit (Don't forget to change the dependency) -->
 		<repository>
-			<id>papermc-repo</id>
+			<id>papermc</id>
 			<url>https://repo.papermc.io/repository/maven-public/</url>
 		</repository>
 
-		<!-- Sonatype is used for snapshot versions -->
 		<repository>
-			<id>sonatype</id>
-			<url>https://oss.sonatype.org/content/groups/public/</url>
+			<id>Jitpack</id>
+			<url>https://jitpack.io</url>
 		</repository>
 	</repositories>
 
@@ -50,10 +48,35 @@
 		<dependency>
 			<groupId>io.papermc.paper</groupId>
 			<artifactId>paper-api</artifactId>
-			<version>1.21-R0.1-SNAPSHOT</version>
+			<version>1.21.4-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.saicone.rtag</groupId>
+			<artifactId>rtag</artifactId>
+			<version>1.5.9</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.saicone.rtag</groupId>
+			<artifactId>rtag-block</artifactId>
+			<version>1.5.9</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.saicone.rtag</groupId>
+			<artifactId>rtag-entity</artifactId>
+			<version>1.5.9</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.saicone.rtag</groupId>
+			<artifactId>rtag-item</artifactId>
+			<version>1.5.9</version>
+			<scope>provided</scope>
+		</dependency>
 		<!--
 		<dependency>
 			<groupId>net.kyori</groupId>

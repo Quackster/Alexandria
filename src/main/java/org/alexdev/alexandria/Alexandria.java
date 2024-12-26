@@ -3,8 +3,9 @@ package org.alexdev.alexandria;
 import com.loohp.lotterysix.objects.Scheduler;
 import org.alexdev.alexandria.commands.*;
 import org.alexdev.alexandria.listeners.*;
-import org.alexdev.alexandria.configuration.ConfigurationManager;
+import org.alexdev.alexandria.managers.ConfigurationManager;
 import org.alexdev.alexandria.managers.PlayerManager;
+import org.alexdev.alexandria.managers.StorageManager;
 import org.alexdev.alexandria.tasks.PlayerActivityTask;
 import org.alexdev.alexandria.util.RecipeGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,6 +19,7 @@ public class Alexandria extends JavaPlugin {
     private static Alexandria instance;
 
     private ConfigurationManager configurationManager;
+    private StorageManager storageManager;
 
     private Logger logger;
     private PlayerActivityTask playerActivityTask;
@@ -30,11 +32,9 @@ public class Alexandria extends JavaPlugin {
 
         // Load singletons
         this.configurationManager = new ConfigurationManager(this);
+        this.configurationManager.readConfig();
 
-        // Load configuration
-        saveDefaultConfig();
-
-        this.configurationManager.readConfig(getConfig());
+        this.storageManager = new StorageManager(this);
 
         // Reload players
         PlayerManager.getInstance().reloadPlayers();
@@ -73,6 +73,7 @@ public class Alexandria extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new AnimalListener(this), this);
         getServer().getPluginManager().registerEvents(new VillagerInventoryListener(this), this);
         getServer().getPluginManager().registerEvents(new VillagerTradeListener(this), this);
+        getServer().getPluginManager().registerEvents(new ChunkListener(this), this);
     }
 
     @Override
@@ -82,5 +83,9 @@ public class Alexandria extends JavaPlugin {
 
     public ConfigurationManager getConfigurationManager() {
         return configurationManager;
+    }
+
+    public StorageManager getStorageManager() {
+        return storageManager;
     }
 }

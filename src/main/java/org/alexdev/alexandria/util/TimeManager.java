@@ -3,7 +3,7 @@ package org.alexdev.alexandria.util;
 import org.alexdev.alexandria.util.time.Time;
 import org.bukkit.Location;
 
-public class TimeUtil {
+public class TimeManager {
     public static long getUnixTime() {
         long unixTime = System.currentTimeMillis() / 1000L;
         return unixTime;

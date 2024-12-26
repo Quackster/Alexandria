@@ -10,7 +10,7 @@ import org.alexdev.alexandria.Alexandria;
 import org.alexdev.alexandria.managers.PluginPlayer;
 import org.alexdev.alexandria.managers.PlayerManager;
 import org.alexdev.alexandria.util.MetadataKeys;
-import org.alexdev.alexandria.util.TimeUtil;
+import org.alexdev.alexandria.util.TimeManager;
 import org.alexdev.alexandria.util.enums.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -23,7 +23,6 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.concurrent.TimeUnit;
@@ -165,7 +164,7 @@ public class PlayerListener implements Listener {
         if (player.hasMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY)) {
             long secondsSince = player.getMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY).get(0).asLong();
 
-            if (secondsSince + TimeUnit.HOURS.toSeconds(24) > TimeUtil.getUnixTime()) {
+            if (secondsSince + TimeUnit.HOURS.toSeconds(24) > TimeManager.getUnixTime()) {
                 player.removeMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY, this.plugin);
 
                 player.sendMessage(Component.text()

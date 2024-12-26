@@ -7,15 +7,12 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.alexdev.alexandria.Alexandria;
 import org.alexdev.alexandria.managers.PlayerManager;
 import org.alexdev.alexandria.managers.PluginPlayer;
-import org.alexdev.alexandria.util.MetadataKeys;
-import org.alexdev.alexandria.util.TimeUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
