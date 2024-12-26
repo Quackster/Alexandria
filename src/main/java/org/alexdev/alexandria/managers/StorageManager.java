@@ -11,7 +11,9 @@ import java.io.File;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class StorageManager {
     private final Alexandria plugin;
@@ -158,7 +160,8 @@ public class StorageManager {
         RtagBlock tag = new RtagBlock(vaultBlock);
 
         //Remove the UUID from server_data/rewarded_players NBT Data
-        tag.remove("server_data", "rewarded_players");
+        var uuids = new ArrayList<int[]>();
+        tag.set(uuids, "server_data", "rewarded_players");
 
         tag.load();
     }
