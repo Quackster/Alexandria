@@ -1,7 +1,6 @@
 package org.alexdev.alexandria.listeners;
 
 import org.alexdev.alexandria.Alexandria;
-import org.alexdev.alexandria.util.TimeManager;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -31,13 +30,12 @@ public class ChunkListener implements Listener {
 
             var vaultBlock = blockState.getBlock();
 
-            if (!(this.plugin.getStorageManager().hasVaultDate(vaultBlock)) ||
-                    ((System.currentTimeMillis() / 1000L) + TimeUnit.DAYS.toSeconds(7)) >
-                            this.plugin.getStorageManager().getVaultDate(vaultBlock)) {
+            if (!(this.plugin.getStorageManager().hasVaultExpiry(vaultBlock)) ||
+                 (this.plugin.getStorageManager().getNextResetTime() > this.plugin.getStorageManager().getVaultExpiry(vaultBlock))) {
                 this.plugin.getStorageManager().resetVault(vaultBlock);
             }
             else {
-                this.plugin.getStorageManager().saveVaultData(vaultBlock);
+                this.plugin.getStorageManager().saveVaultExpiry(vaultBlock);
             }
         }
 

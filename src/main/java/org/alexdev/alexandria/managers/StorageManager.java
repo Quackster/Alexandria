@@ -2,6 +2,7 @@ package org.alexdev.alexandria.managers;
 
 import com.saicone.rtag.RtagBlock;
 import org.alexdev.alexandria.Alexandria;
+import org.alexdev.alexandria.util.TimeManager;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
@@ -12,8 +13,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class StorageManager {
     private final Alexandria plugin;
@@ -35,6 +35,25 @@ public class StorageManager {
         }
 
         this.config = YamlConfiguration.loadConfiguration(this.configFile);
+
+        if (!this.config.contains("next-reset-time")) {
+            this.setNextReset();
+        }
+    }
+
+    private void setNextReset() {
+        this.config.set("next-reset-time", TimeManager.getUnixTime() + TimeUnit.DAYS.toSeconds(7));
+        this.saveConfig();
+    }
+
+    public long getNextResetTime() {
+        return this.config.getLong("next-reset-time");
+    }
+
+    public void sanityCheckResetTime() {
+        if (TimeManager.getUnixTime() > getNextResetTime()) {
+            setNextReset();
+        }
     }
 
     /**
@@ -44,7 +63,7 @@ public class StorageManager {
      * @param vault the vault block
      * @return true, if successful
      */
-    public boolean saveVaultData(Block vault) {
+    public boolean saveVaultExpiry(Block vault) {
         var configSectionName = this.getConfigurationSectionName(vault.getLocation());
         var configSection = this.getConfigurationSection(vault.getLocation());
 
@@ -53,7 +72,7 @@ public class StorageManager {
         }
 
         configSection = this.config.createSection(configSectionName);
-        configSection.set("last-loaded", System.currentTimeMillis() / 1000L);
+        configSection.set("vault-expiry", TimeManager.getUnixTime() + TimeUnit.DAYS.toSeconds(7));
 
         this.saveConfig();
 
@@ -67,7 +86,7 @@ public class StorageManager {
      * @param vault the vault block
      * @return true, if successful
      */
-    public long getVaultDate(Block vault) {
+    public long getVaultExpiry(Block vault) {
         var configSectionName = this.getConfigurationSectionName(vault.getLocation());
         var configSection = this.getConfigurationSection(vault.getLocation());
 
@@ -75,10 +94,10 @@ public class StorageManager {
             this.config.set(configSectionName, null);
         }
 
-        return configSection.getLong("last-loaded");
+        return configSection.getLong("vault-expiry");
     }
 
-    public boolean hasVaultDate(Block vault) {
+    public boolean hasVaultExpiry(Block vault) {
         var configSectionName = this.getConfigurationSectionName(vault.getLocation());
         var configSection = this.getConfigurationSection(vault.getLocation());
 
@@ -102,7 +121,7 @@ public class StorageManager {
      * @return the YAML config section name
      */
     private String getConfigurationSectionName(Location location) {
-        return "towers." + createHash(location);
+        return "vaults." + createHash(location);
     }
 
     /**
@@ -154,7 +173,7 @@ public class StorageManager {
     }
 
     public void resetVault(Block vaultBlock) {
-        this.plugin.getStorageManager().saveVaultData(vaultBlock);
+        this.plugin.getStorageManager().saveVaultExpiry(vaultBlock);
 
         //Get the NBT Data of the vault block
         RtagBlock tag = new RtagBlock(vaultBlock);

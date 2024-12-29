@@ -42,6 +42,8 @@ public class PlayerListener implements Listener {
             PlayerManager.getInstance().addPlayer(player);
         }
 
+        this.plugin.getStorageManager().sanityCheckResetTime();
+
         player.sendMessage(Component.text()
                 .append(Component.text("Welcome to ", Style.style(NamedTextColor.GOLD)))
                 .append(Component.text("Alexandria", Style.style(NamedTextColor.GOLD, TextDecoration.BOLD)))
