@@ -82,7 +82,13 @@ public class PlayerListener implements Listener {
                 .append(Component.text("We're all friends on this server, please do not grief or steal from other people.", Style.style(NamedTextColor.YELLOW, TextDecoration.ITALIC)))
                 .build());
 
-        player.sendMessage("");
+        // player.sendMessage("");
+
+        player.sendMessage(Component.text()
+                .append(Component.text("Next trial vault reset: ", Style.style(NamedTextColor.GRAY)))
+                .append(Component.text(TimeManager.minutesToDaysHoursMinutes(this.plugin.getStorageManager().getNextResetTime() - TimeManager.getUnixTime()),
+                        Style.style(NamedTextColor.BLUE)))
+                .build());
 
         if (!player.hasPlayedBefore()) {
             player.getInventory().addItem(new ItemStack(Material.STONE_SWORD, 1));
