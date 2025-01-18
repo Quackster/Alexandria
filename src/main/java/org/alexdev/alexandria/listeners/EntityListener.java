@@ -7,6 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Skeleton;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
@@ -68,8 +69,31 @@ public class EntityListener implements Listener {
                     }
                 }
 
-                int membraneDropCount = this.random.nextInt(maxMembraneChance) + 1; // Randomly decide the drop count
+                int membraneDropCount = this.random.nextInt(maxMembraneChance); // Randomly decide the drop count
                 event.getDrops().add(new ItemStack(Material.PHANTOM_MEMBRANE, membraneDropCount));
+            }
+        }
+    }
+
+    @EventHandler
+    public void onSkeletonSpawnEvent(EntitySpawnEvent event) {
+        if (event.getEntityType() == EntityType.SKELETON) {
+            if (event.getEntity().getEntitySpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER ||
+                event.getEntity().getEntitySpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG) {
+                var monster = (Skeleton) event.getEntity();
+                var chance = 0.085F;
+
+                monster.getEquipment().setHelmetDropChance(0.0F);
+                monster.getEquipment().setChestplateDropChance(0.0F);
+                monster.getEquipment().setLeggingsDropChance(0.0F);
+                monster.getEquipment().setBootsDropChance(0.0F);
+                monster.getEquipment().setItemInMainHandDropChance(0.0F);
+
+                monster.getEquipment().setHelmetDropChance(chance);
+                monster.getEquipment().setChestplateDropChance(chance);
+                monster.getEquipment().setLeggingsDropChance(chance);
+                monster.getEquipment().setBootsDropChance(chance);
+                monster.getEquipment().setItemInMainHandDropChance(chance);
             }
         }
     }
@@ -100,7 +124,7 @@ public class EntityListener implements Listener {
                 }
             }
 
-            int sandDropCount = this.random.nextInt(maxSandDropChance) + 1; // Randomly decide the drop count
+            int sandDropCount = this.random.nextInt(maxSandDropChance); // Randomly decide the drop count
             event.getDrops().add(new ItemStack(Material.SAND, sandDropCount));
         }
     }
