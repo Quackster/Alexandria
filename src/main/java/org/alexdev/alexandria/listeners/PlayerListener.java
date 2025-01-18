@@ -169,6 +169,7 @@ public class PlayerListener implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getPlayer();
 
+        /*
         if (player.hasMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY)) {
             long secondsSince = player.getMetadata(MetadataKeys.BANISH_TIME_SINCE_KEY).get(0).asLong();
 
@@ -181,7 +182,7 @@ public class PlayerListener implements Listener {
                         .append(Component.text("24 hour timeout has been reset", Style.style(NamedTextColor.GRAY)))
                         .build());
             }
-        }
+        }*/
     }
 
 
